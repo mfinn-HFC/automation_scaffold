@@ -1,0 +1,14 @@
+
+{
+  "comment" : "This is an example of the JSON structure that can be used in your local automation set up for a specific project. Please do not include this comment line. Note that 'name' refers to the name of the test",
+  "environments" :
+  [
+    {
+      "platform" : "Windows 10",
+      "version" : "53.0",
+      "browserName" : "chrome",
+      "name" : "",
+      "testServer" : ""
+    }
+  ]
+}

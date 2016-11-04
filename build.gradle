@@ -14,4 +14,5 @@ dependencies {
     compile 'com.applitools:eyes-selenium-java:2.54'
     compile 'com.mycila:mycila-junit:1.4.ga'
     compile 'javax.mail:mail:+'
+    compile 'com.google.code.gson:gson:2.8.0'
 }
