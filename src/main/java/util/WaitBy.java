@@ -32,7 +32,7 @@ public class WaitBy {
     /**
      * Would this be better served by some kind of Lambda? Couldn't figure out a working lambda for this stuff
      */
-    public void waitByWebDriverMethod(final By locator, Function webdriverMethod) {
+    /*public void waitByWebDriverMethod(final By locator, Function webdriverMethod) {
         final long startTime = System.currentTimeMillis();
         wait.until(new ExpectedCondition() {
             @Override
@@ -46,7 +46,7 @@ public class WaitBy {
                 }
             }
         });
-    }
+    }*/
 
     public void waitByLocatorElementNotDisplayed(final By locator) {
         final long startTime = System.currentTimeMillis();
