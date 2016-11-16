@@ -9,6 +9,13 @@
       "browserName" : "chrome",
       "name" : "",
       "testServer" : ""
+    },
+    {
+      "platform" : "Windows 10",
+      "version" : "53.0",
+      "browserName" : "firefox",
+      "name" : "",
+      "testServer" : ""
     }
   ]
 }
