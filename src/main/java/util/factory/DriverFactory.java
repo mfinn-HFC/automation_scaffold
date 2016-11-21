@@ -20,11 +20,11 @@ public class DriverFactory {
     public static Object[][] getDrivers(List<DesiredCapabilities> capabilitiesList) throws MalformedURLException {
 
         int listSize = capabilitiesList.size();
-        final Object[] driverArray = new Object[listSize];
+        final RemoteWebDriver[] driverArray = new RemoteWebDriver[listSize];
         int index = 0;
 
         for (DesiredCapabilities caps : capabilitiesList) {
-            final Object[] innerArray = new Object[1];
+            final RemoteWebDriver[] innerArray = new RemoteWebDriver[1];
             try {
                 if (caps.getCapability("platformName").toString().toLowerCase().equals("android")) {
                     AndroidDriver androidDriver = new AndroidDriver(
@@ -45,7 +45,7 @@ public class DriverFactory {
                         new URL(caps.getCapability("testServer").toString()), caps);
                 innerArray[0] = webDriver;
 
-                driverArray[index] = innerArray;
+                driverArray[index] = innerArray[0];
                 index++;
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
@@ -53,7 +53,7 @@ public class DriverFactory {
         }
         Object[][] finalArray = new Object[driverArray.length][driverArray.length];
         int arrayIndex = 0;
-        for(Object obj : driverArray)
+        for(RemoteWebDriver obj : driverArray)
         {
             finalArray[arrayIndex] = new Object[]{obj};
             arrayIndex++;
