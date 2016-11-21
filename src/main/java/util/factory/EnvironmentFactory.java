@@ -23,15 +23,25 @@ public class EnvironmentFactory {
         this.testServer = testServer;
     }
 
-    public List<TestEnvironment> getTestEnvironmentsFromJSON(JsonObject testEnvironments)
+    public Object[][] getTestEnvironmentsFromJSON(JsonObject testEnvironments)
     {
-        List<TestEnvironment> testEnvironmentList = null;
         Gson gson = new Gson();
+        List<TestEnvironment> testEnvironmentList = null;
         for( JsonElement element : testEnvironments.get("environments").getAsJsonArray() )
         {
             TestEnvironment testEnvironment = gson.fromJson(element, TestEnvironment.class);
             testEnvironmentList.add(testEnvironment);
         }
-        return testEnvironmentList;
+
+        int listSize = testEnvironmentList.size();
+        final Object[][] envsArray = new Object[listSize][listSize];
+
+        for (int i = 0; i < listSize; i++)
+        {
+            final Object[] innerArray = new Object[1];
+            innerArray[1] = testEnvironmentList.get(i);
+            envsArray[i] = (Object[]) innerArray[1];
+        }
+        return envsArray;
     }
 }
