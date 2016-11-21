@@ -20,7 +20,7 @@ public class CapabilitiesFactory {
         for(TestEnvironment testEnvironment : testEnvironments)
         {
             DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
-            for (Field field : testEnvironment.getClass().getFields())
+            for (Field field : testEnvironment.getClass().getDeclaredFields())
             {
                 if ( !( (String) field.get(testEnvironment) ).isEmpty() )
                     desiredCapabilities.setCapability( field.getName(), (String) field.get(testEnvironment) );
