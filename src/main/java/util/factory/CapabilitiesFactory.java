@@ -23,7 +23,7 @@ public class CapabilitiesFactory {
             {
                 try {
 
-
+                    String string = testEnvironment.getClass().getField(field.getName()).get(testEnvironment).toString();
                     desiredCapabilities.setCapability(field.getName(), testEnvironment.getClass().getField(field.getName()).get(testEnvironment));
                 } catch (Exception e) {}
             }
