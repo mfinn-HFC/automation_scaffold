@@ -9,7 +9,7 @@ public class TestEnvironment {
 
     private String platform;
     private String version;
-    private String browser; // Web tests only
+    private String browserName; // Web tests only
     private String name; // Not sure if we're going to use this one, we will need to set the name somewhere
     private String testServer; // Cloud service you want to point at
 
@@ -25,8 +25,8 @@ public class TestEnvironment {
         return name;
     }
 
-    public String getBrowser() {
-        return browser;
+    public String getBrowserName() {
+        return browserName;
     }
 
     public String getTestServer() {
