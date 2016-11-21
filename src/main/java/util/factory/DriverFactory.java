@@ -43,7 +43,7 @@ public class DriverFactory {
                     new URL(caps.getCapability("testServer").toString()), caps);
             innerArray[0] = webDriver;
 
-            driverArray[index] = innerArray;
+            driverArray[0][index] = innerArray;
             index++;
         }
         return driverArray;
