@@ -16,37 +16,37 @@ import java.util.List;
  */
 public class DriverFactory {
 
-    public static Object[][] getDrivers(List<DesiredCapabilities> capabilitiesList) {
+    public static Object[][] getDrivers(List<DesiredCapabilities> capabilitiesList) throws MalformedURLException {
 
         int listSize = capabilitiesList.size();
         final Object[][] driverArray = new Object[listSize][listSize];
         int index = 0;
 
-            for(DesiredCapabilities caps : capabilitiesList) {
-                try {
-                    final Object[] innerArray = new Object[1];
-                    try {
-                        if (caps.getCapability("platformName").toString().toLowerCase().equals("android")) {
-                            AndroidDriver androidDriver = new AndroidDriver(
-                                    new URL(caps.getCapability("testServer").toString()), caps);
-                            innerArray[0] = androidDriver;
+        for (DesiredCapabilities caps : capabilitiesList) {
+            final Object[] innerArray = new Object[1];
+            try {
+                if (caps.getCapability("platformName").toString().toLowerCase().equals("android")) {
+                    AndroidDriver androidDriver = new AndroidDriver(
+                            new URL(caps.getCapability("testServer").toString()), caps);
+                    innerArray[0] = androidDriver;
 
-                        } else if (caps.getCapability("platformName").toString().toLowerCase().equals("ios")) {
-                            IOSDriver iosDriver = new IOSDriver(
-                                    new URL(caps.getCapability("testServer").toString()), caps);
-                            innerArray[0] = iosDriver;
-                        }
-                    } catch (Exception e) {}
-
-                    // Give us a generic RemoteWebDriver if we can't determine that it is an iOS or Android type driver (Appium)
-                    if (innerArray[0] == null) {
-                        RemoteWebDriver webDriver = new RemoteWebDriver(
-                                new URL(caps.getCapability("testServer").toString()), caps);
-                        innerArray[0] = webDriver;
-                    }
-                    driverArray[index] = (Object[]) innerArray[0];
-                } catch (MalformedURLException e) {}
+                } else if (caps.getCapability("platformName").toString().toLowerCase().equals("ios")) {
+                    IOSDriver iosDriver = new IOSDriver(
+                            new URL(caps.getCapability("testServer").toString()), caps);
+                    innerArray[0] = iosDriver;
+                }
+            } catch (Exception e) {
             }
+
+            // Give us a generic RemoteWebDriver if we can't determine that it is an iOS or Android type driver (Appium)
+            if (innerArray[0] == null) {
+                RemoteWebDriver webDriver = new RemoteWebDriver(
+                        new URL(caps.getCapability("testServer").toString()), caps);
+                innerArray[0] = webDriver;
+
+                driverArray[index] = (Object[]) innerArray[0];
+            }
+        }
         return driverArray;
     }
 }
