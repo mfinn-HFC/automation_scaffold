@@ -14,16 +14,14 @@ import java.util.List;
  */
 public class CapabilitiesFactory {
 
-    public List<DesiredCapabilities> getCapabilities(List<TestEnvironment> testEnvironments) throws IllegalAccessException
-    {
+    public List<DesiredCapabilities> getCapabilities(List<TestEnvironment> testEnvironments) throws IllegalAccessException, NoSuchFieldException {
         List<DesiredCapabilities> desiredCapabilitiesList = new ArrayList<>();
         for(TestEnvironment testEnvironment : testEnvironments)
         {
             DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
             for (Field field : testEnvironment.getClass().getDeclaredFields())
             {
-                if ( !( (String) field.get(testEnvironment) ).isEmpty() )
-                    desiredCapabilities.setCapability( field.getName(), (String) field.get(testEnvironment) );
+                desiredCapabilities.setCapability( field.getName(), testEnvironment.getClass().getDeclaredField(field.getName()) );
             }
             desiredCapabilitiesList.add(desiredCapabilities);
         }
