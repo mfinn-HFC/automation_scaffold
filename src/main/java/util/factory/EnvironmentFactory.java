@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import model.TestEnvironment;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -23,7 +24,7 @@ public class EnvironmentFactory {
     public List<TestEnvironment> getTestEnvironmentsFromJSON(JsonObject testEnvironments)
     {
         Gson gson = new Gson();
-        List<TestEnvironment> testEnvironmentList = null;
+        List<TestEnvironment> testEnvironmentList = new ArrayList<>();
         for( JsonElement element : testEnvironments.get("environments").getAsJsonArray() )
         {
             TestEnvironment testEnvironment = gson.fromJson(element, TestEnvironment.class);
