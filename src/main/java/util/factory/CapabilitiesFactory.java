@@ -22,7 +22,7 @@ public class CapabilitiesFactory {
             for (Field field : testEnvironment.getClass().getDeclaredFields())
             {
                 try {
-                    Object obj1 = testEnvironment.getClass().getField(field.getName());
+                    //Object obj1 = testEnvironment.getClass().getField(field.getName());
                     Object obj2 = testEnvironment.getClass().getDeclaredField(field.getName());
                     Object obj4 = testEnvironment.getClass().getDeclaredField(field.getName()).toString();
                     Object obj3 = testEnvironment.getClass().getField(field.getName()).get(testEnvironment);
