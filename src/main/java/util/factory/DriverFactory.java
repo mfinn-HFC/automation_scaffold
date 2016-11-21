@@ -6,6 +6,7 @@ import org.openqa.selenium.firefox.internal.Executable;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
+import java.lang.reflect.Array;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
@@ -42,7 +43,8 @@ public class DriverFactory {
                     new URL(caps.getCapability("testServer").toString()), caps);
             innerArray[0] = webDriver;
 
-            driverArray[index] = (Object[]) innerArray[0];
+            driverArray[index] = innerArray;
+            index++;
         }
         return driverArray;
     }
