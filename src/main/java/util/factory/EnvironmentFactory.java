@@ -18,10 +18,7 @@ public class EnvironmentFactory {
 
     private String testServer;
 
-    public EnvironmentFactory(String testServer)
-    {
-        this.testServer = testServer;
-    }
+    public EnvironmentFactory() {}
 
     public List<TestEnvironment> getTestEnvironmentsFromJSON(JsonObject testEnvironments)
     {
