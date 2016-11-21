@@ -23,7 +23,7 @@ public class EnvironmentFactory {
         this.testServer = testServer;
     }
 
-    public Object[][] getTestEnvironmentsFromJSON(JsonObject testEnvironments)
+    public List<TestEnvironment> getTestEnvironmentsFromJSON(JsonObject testEnvironments)
     {
         Gson gson = new Gson();
         List<TestEnvironment> testEnvironmentList = null;
@@ -32,16 +32,6 @@ public class EnvironmentFactory {
             TestEnvironment testEnvironment = gson.fromJson(element, TestEnvironment.class);
             testEnvironmentList.add(testEnvironment);
         }
-
-        int listSize = testEnvironmentList.size();
-        final Object[][] envsArray = new Object[listSize][listSize];
-
-        for (int i = 0; i < listSize; i++)
-        {
-            final Object[] innerArray = new Object[1];
-            innerArray[1] = testEnvironmentList.get(i);
-            envsArray[i] = (Object[]) innerArray[1];
-        }
-        return envsArray;
+        return testEnvironmentList;
     }
 }
