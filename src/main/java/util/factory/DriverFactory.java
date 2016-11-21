@@ -20,7 +20,7 @@ public class DriverFactory {
     public static Object[][] getDrivers(List<DesiredCapabilities> capabilitiesList) throws MalformedURLException {
 
         int listSize = capabilitiesList.size();
-        final Object[][] driverArray = new Object[listSize - 1][listSize - 1];
+        final Object[][] driverArray = new Object[listSize][listSize];
         int index = 0;
 
         for (DesiredCapabilities caps : capabilitiesList) {
