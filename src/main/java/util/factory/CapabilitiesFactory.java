@@ -6,6 +6,7 @@ import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ public class CapabilitiesFactory {
 
     public List<DesiredCapabilities> getCapabilities(List<TestEnvironment> testEnvironments) throws IllegalAccessException
     {
-        List<DesiredCapabilities> desiredCapabilitiesList = null;
+        List<DesiredCapabilities> desiredCapabilitiesList = new ArrayList<>();
         for(TestEnvironment testEnvironment : testEnvironments)
         {
             DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
