@@ -36,16 +36,21 @@ public class DriverFactory {
                             new URL(caps.getCapability("testServer").toString()), caps);
                     innerArray[0] = iosDriver;
                 }
-            } catch (Exception e) {}
+            } catch (Exception e) {
+            }
 
-            // Give us a generic RemoteWebDriver if we can't determine that it is an iOS or Android type driver (Appium)
-            RemoteWebDriver webDriver = new RemoteWebDriver(
-                    new URL(caps.getCapability("testServer").toString()), caps);
-            innerArray[0] = webDriver;
+            try {
+                // Give us a generic RemoteWebDriver if we can't determine that it is an iOS or Android type driver (Appium)
+                RemoteWebDriver webDriver = new RemoteWebDriver(
+                        new URL(caps.getCapability("testServer").toString()), caps);
+                innerArray[0] = webDriver;
 
-            driverArray[index] = innerArray;
-            index++;
+                driverArray[index] = innerArray;
+                index++;
+            } catch (Exception ex) {
+                System.out.println(ex.getMessage());
+            }
         }
-        return new Object[][] { driverArray };
+        return new Object[][]{driverArray};
     }
 }
