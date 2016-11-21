@@ -24,7 +24,7 @@ public class CapabilitiesFactory {
                 try {
 
 
-                    desiredCapabilities.setCapability(field.getName(), testEnvironment.getClass().getField(field.getName()).get(testEnvironment));
+                    desiredCapabilities.setCapability(field.getName(), testEnvironment.getClass().getField(field.getName()).get(testEnvironment).toString());
                 } catch (Exception e) {}
             }
             desiredCapabilitiesList.add(desiredCapabilities);
