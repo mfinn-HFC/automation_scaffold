@@ -8,6 +8,7 @@ package model;
 public class TestEnvironment {
 
     private String platform;
+    private String platformName;
     private String version;
     private String browserName; // Web tests only
     private String name; // Not sure if we're going to use this one, we will need to set the name somewhere
@@ -31,5 +32,9 @@ public class TestEnvironment {
 
     public String getTestServer() {
         return testServer;
+    }
+
+    public String getPlatformName() {
+        return platformName;
     }
 }
