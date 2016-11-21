@@ -51,9 +51,13 @@ public class DriverFactory {
                 System.out.println(ex.getMessage());
             }
         }
-        Object[][] finalArray = new Object[1][1]; 
-
-        finalArray[0] = driverArray;
+        Object[][] finalArray = new Object[1][1];
+        int arrayIndex = 0;
+        for(Object obj : driverArray)
+        {
+            finalArray[arrayIndex] = new Object[]{obj};
+            arrayIndex++;
+        }
 
         return finalArray;
     }
