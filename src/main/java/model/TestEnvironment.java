@@ -7,12 +7,12 @@ package model;
  */
 public class TestEnvironment {
 
-    private String platform;
-    private String platformName;
-    private String version;
-    private String browserName; // Web tests only
-    private String name; // Not sure if we're going to use this one, we will need to set the name somewhere
-    private String testServer; // Cloud service you want to point at
+    public String platform;
+    public String platformName;
+    public String version;
+    public String browserName; // Web tests only
+    public String name; // Not sure if we're going to use this one, we will need to set the name somewhere
+    public String testServer; // Cloud service you want to point at
 
     public String getPlatform() {
         return platform;
