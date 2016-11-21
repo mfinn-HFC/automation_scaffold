@@ -21,7 +21,7 @@ public class CapabilitiesFactory {
             DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
             for (Field field : testEnvironment.getClass().getDeclaredFields())
             {
-                desiredCapabilities.setCapability( field.getName(), testEnvironment.getClass().getDeclaredField(field.getName()).get(testEnvironment));
+                desiredCapabilities.setCapability( field.getName(), testEnvironment.getClass().getField(field.getName()).get(testEnvironment));
             }
             desiredCapabilitiesList.add(desiredCapabilities);
         }
