@@ -29,24 +29,23 @@ public class DriverFactory {
                         if (caps.getCapability("platformName").toString().toLowerCase().equals("android")) {
                             AndroidDriver androidDriver = new AndroidDriver(
                                     new URL(caps.getCapability("testServer").toString()), caps);
-                            innerArray[1] = androidDriver;
+                            innerArray[0] = androidDriver;
 
                         } else if (caps.getCapability("platformName").toString().toLowerCase().equals("ios")) {
                             IOSDriver iosDriver = new IOSDriver(
                                     new URL(caps.getCapability("testServer").toString()), caps);
-                            innerArray[1] = iosDriver;
+                            innerArray[0] = iosDriver;
                         }
                     } catch (Exception e) {}
 
                     // Give us a generic RemoteWebDriver if we can't determine that it is an iOS or Android type driver (Appium)
-                    if (innerArray[1] == null) {
+                    if (innerArray[0] == null) {
                         RemoteWebDriver webDriver = new RemoteWebDriver(
                                 new URL(caps.getCapability("testServer").toString()), caps);
-                        innerArray[1] = webDriver;
+                        innerArray[0] = webDriver;
                     }
-                    driverArray[index] = (Object[]) innerArray[1];
-                } catch (MalformedURLException e) {
-                }
+                    driverArray[index] = (Object[]) innerArray[0];
+                } catch (MalformedURLException e) {}
             }
         return driverArray;
     }
