@@ -8,6 +8,7 @@ package model;
 public class TestEnvironment {
 
     public String platform;
+    public String platformName;
     public String version;
     public String browserName; // Web tests only
     public String name; // Not sure if we're going to use this one, we will need to set the name somewhere
