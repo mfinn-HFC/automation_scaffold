@@ -14,7 +14,7 @@ public class EyesProvider {
     private String appName;
     private RemoteWebDriver driver;
     private String testName;
-    private final String apiKey = "";
+    private final String apiKey = "pO97uSsUD6bcG8eFGthg2clPetD6xVsrhxTfrlseCgU110";
 
     public EyesProvider(RemoteWebDriver driver, String appName, String testName) {
         this.driver = driver;
