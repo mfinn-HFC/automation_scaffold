@@ -1,8 +1,6 @@
 package util.factory;
 
-import model.TestEnvironment;
-import org.aspectj.weaver.ast.Test;
-import org.openqa.selenium.Capabilities;
+import model.WebEnvironment;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.lang.reflect.Field;
@@ -14,7 +12,7 @@ import java.util.List;
  */
 public class CapabilitiesFactory {
 
-    public List<DesiredCapabilities> getCapabilities(List<TestEnvironment> testEnvironments) throws IllegalAccessException, NoSuchFieldException {
+    public List<DesiredCapabilities> getCapabilities(List<WebEnvironment> testEnvironments) throws IllegalAccessException, NoSuchFieldException {
         List<DesiredCapabilities> desiredCapabilitiesList = new ArrayList<>();
         for(TestEnvironment testEnvironment : testEnvironments)
         {

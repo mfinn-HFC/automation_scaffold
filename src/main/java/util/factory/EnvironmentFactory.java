@@ -4,30 +4,25 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import model.TestEnvironment;
+import model.WebEnvironment;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by matt-hfc on 11/4/16.
- * This factory will accept a list of JSON environments, and return a List<TestEnvironment> that can be fed into the
+ * This factory will accept a list of JSON environments, and return a List<T extends TestEnvironment> that can be fed into the
  * capabilitiesFactory
  */
-public class EnvironmentFactory {
+public class EnvironmentFactory <T extends TestEnvironment> {
 
-    private String testServer;
-
-    public EnvironmentFactory() {}
-
-    public List<TestEnvironment> getTestEnvironmentsFromJSON(JsonObject testEnvironments)
+    public List<T> getTestEnvironmentsFromJSON(JsonObject testEnvironments, Class<T> testEnvironmentType)
     {
         Gson gson = new Gson();
-        List<TestEnvironment> testEnvironmentList = new ArrayList<>();
-        for( JsonElement element : testEnvironments.get("environments").getAsJsonArray() )
+        List<T> testEnvironmentList = new ArrayList<>();
+        for( JsonElement element : testEnvironments.get("capabilities").getAsJsonArray() )
         {
-            TestEnvironment testEnvironment = gson.fromJson(element, TestEnvironment.class);
+            T testEnvironment = gson.fromJson(element, testEnvironmentType);
             testEnvironmentList.add(testEnvironment);
         }
         return testEnvironmentList;
