@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class DriverFactory {
 
-    public static Object[][] getDrivers(List<DesiredCapabilities> capabilitiesList) throws MalformedURLException {
+    public static Object[][] getDrivers(List<DesiredCapabilities> capabilitiesList, String testServer) throws MalformedURLException {
 
         int listSize = capabilitiesList.size();
         final RemoteWebDriver[] driverArray = new RemoteWebDriver[listSize];
@@ -30,14 +30,14 @@ public class DriverFactory {
                 if (caps.getCapability("testdroid_target").toString().toLowerCase().equals("android"))
                 {
                     AndroidDriver androidDriver = new AndroidDriver(
-                            new URL(caps.getCapability("testServer").toString()), caps);
+                            new URL(testServer), caps);
                     innerArray[0] = androidDriver;
 
                 }
                 else if (caps.getCapability("testdroid_target").toString().toLowerCase().equals("ios"))
                 {
                     IOSDriver iosDriver = new IOSDriver(
-                            new URL(caps.getCapability("testServer").toString()), caps);
+                            new URL(testServer), caps);
                     innerArray[0] = iosDriver;
                 }
                 else
