@@ -23,11 +23,11 @@ public class EnvironmentFactory <T extends TestEnvironment> {
         List<T> testEnvironmentList = null;
         for( JsonElement element : testEnvironments.get("capabilities").getAsJsonArray() )
         {
-            if(testEnvironmentType.getSimpleName() == TestdroidEnvironment.class.getSimpleName()) {
+            if(testEnvironmentType == TestdroidEnvironment.class) {
                 TestdroidEnvironment testEnvironment = gson.fromJson(element, TestdroidEnvironment.class);
                 testEnvironmentList.add((T) testEnvironment);
             }
-            else if(testEnvironmentType.getSimpleName() == WebEnvironment.class.getSimpleName()) {
+            else if(testEnvironmentType == WebEnvironment.class) {
                 WebEnvironment testEnvironment = gson.fromJson(element, WebEnvironment.class);
                 testEnvironmentList.add((T) testEnvironment);
             }
