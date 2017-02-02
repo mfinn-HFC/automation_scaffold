@@ -20,7 +20,7 @@ public class EnvironmentFactory <T extends TestEnvironment> {
     public List<T> getTestEnvironmentsFromJSON(JsonObject testEnvironments, Class<T> testEnvironmentType)
     {
         Gson gson = new Gson();
-        List<T> testEnvironmentList = null;
+        List<T> testEnvironmentList = new ArrayList<>();
         for( JsonElement element : testEnvironments.get("capabilities").getAsJsonArray() )
         {
             if(testEnvironmentType == TestdroidEnvironment.class) {
