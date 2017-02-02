@@ -22,7 +22,7 @@ public class EnvironmentFactory <T extends TestEnvironment> {
         List<T> testEnvironmentList = new ArrayList<>();
         for( JsonElement element : testEnvironments.get("capabilities").getAsJsonArray() )
         {
-            T testEnvironment = gson.fromJson(element, testEnvironmentType);
+            T testEnvironment = testEnvironmentType.cast(gson.fromJson(element, testEnvironmentType));
             testEnvironmentList.add(testEnvironment);
         }
         return testEnvironmentList;
