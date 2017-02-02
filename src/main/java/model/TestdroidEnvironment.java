@@ -12,6 +12,7 @@ public class TestdroidEnvironment extends TestEnvironment {
     public String testdroid_testrun;
     public String testdroid_device;
     public String testdroid_target;
+    public String deviceName;
 
     public String getTestdroid_target() {
         return testdroid_target;
