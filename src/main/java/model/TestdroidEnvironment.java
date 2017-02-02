@@ -4,7 +4,7 @@ package model;
  * Created by matt-hfc on 10/31/16.
  * Specific to the Testdroid required capabilitiesds
  */
-public class TestdroidEnvironment {
+public class TestdroidEnvironment extends TestEnvironment {
 
     public String testdroid_app;
     public String testdroid_apiKey;
