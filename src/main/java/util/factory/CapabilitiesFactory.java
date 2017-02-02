@@ -1,5 +1,6 @@
 package util.factory;
 
+import model.TestEnvironment;
 import model.WebEnvironment;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -10,11 +11,11 @@ import java.util.List;
 /**
  * Created by matt-hfc on 10/31/16.
  */
-public class CapabilitiesFactory {
+public class CapabilitiesFactory <T extends TestEnvironment> {
 
-    public List<DesiredCapabilities> getCapabilities(List<WebEnvironment> testEnvironments) throws IllegalAccessException, NoSuchFieldException {
+    public List<DesiredCapabilities> getCapabilities(List<T> testEnvironments) throws IllegalAccessException, NoSuchFieldException {
         List<DesiredCapabilities> desiredCapabilitiesList = new ArrayList<>();
-        for(TestEnvironment testEnvironment : testEnvironments)
+        for(T testEnvironment : testEnvironments)
         {
             DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
             for (Field field : testEnvironment.getClass().getDeclaredFields())
