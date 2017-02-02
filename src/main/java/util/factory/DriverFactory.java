@@ -27,14 +27,14 @@ public class DriverFactory {
             final RemoteWebDriver[] innerArray = new RemoteWebDriver[1];
             try
             {
-                if (caps.getCapability("platformName").toString().toLowerCase().equals("android"))
+                if (caps.getCapability("testdroid_target").toString().toLowerCase().equals("android"))
                 {
                     AndroidDriver androidDriver = new AndroidDriver(
                             new URL(caps.getCapability("testServer").toString()), caps);
                     innerArray[0] = androidDriver;
 
                 }
-                else if (caps.getCapability("platformName").toString().toLowerCase().equals("ios"))
+                else if (caps.getCapability("testdroid_target").toString().toLowerCase().equals("ios"))
                 {
                     IOSDriver iosDriver = new IOSDriver(
                             new URL(caps.getCapability("testServer").toString()), caps);
