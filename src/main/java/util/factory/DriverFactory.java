@@ -48,9 +48,6 @@ public class DriverFactory {
                         RemoteWebDriver webDriver = new RemoteWebDriver(
                                 new URL(caps.getCapability("testServer").toString()), caps);
                         innerArray[0] = webDriver;
-
-                        driverArray[index] = innerArray[0];
-                        index++;
                     }
                     catch (Exception ex)
                     {
@@ -63,7 +60,10 @@ public class DriverFactory {
                 System.out.println(e.getMessage());
             }
 
+            driverArray[index] = innerArray[0];
+            index++;
         }
+
         Object[][] finalArray = new Object[driverArray.length][driverArray.length];
         int arrayIndex = 0;
         for(RemoteWebDriver obj : driverArray)
