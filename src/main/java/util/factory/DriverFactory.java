@@ -3,13 +3,17 @@ package util.factory;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.firefox.internal.Executable;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.lang.reflect.Array;
+import java.lang.reflect.Field;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Generic factory with a static function that will return an appropriate instance of driver for the platform specified
@@ -17,28 +21,30 @@ import java.util.List;
  */
 public class DriverFactory {
 
-    public static Object[][] getDrivers(List<DesiredCapabilities> capabilitiesList, String testServer) throws MalformedURLException {
+    public static RemoteWebDriver getDrivers(DesiredCapabilities capabilities, String testServer, Class clazz) throws MalformedURLException {
 
-        int listSize = capabilitiesList.size();
-        final RemoteWebDriver[] driverArray = new RemoteWebDriver[listSize];
-        int index = 0;
-
-        for (DesiredCapabilities caps : capabilitiesList) {
-            final RemoteWebDriver[] innerArray = new RemoteWebDriver[1];
+        Map<String, ?> capsMap = capabilities.asMap();
             try
             {
-                if (caps.getCapability("testdroid_target").toString().toLowerCase().equals("android"))
+                // Set test name if running in the cloud
+                if(capsMap.containsKey("testdroid_testrun"))
+                {
+                    capabilities.setCapability("testdroid_testrun", clazz.getSimpleName().toString());
+                }
+
+                // Try and get one of the three driver types
+                if (capsMap.containsValue("android"))
                 {
                     AndroidDriver androidDriver = new AndroidDriver(
-                            new URL(testServer), caps);
-                    innerArray[0] = androidDriver;
+                            new URL(testServer), capabilities);
+                    return androidDriver;
 
                 }
-                else if (caps.getCapability("testdroid_target").toString().toLowerCase().equals("ios"))
+                else if (capsMap.containsValue("ios"))
                 {
                     IOSDriver iosDriver = new IOSDriver(
-                            new URL(testServer), caps);
-                    innerArray[0] = iosDriver;
+                            new URL(testServer), capabilities);
+                    return iosDriver;
                 }
                 else
                 {
@@ -46,8 +52,8 @@ public class DriverFactory {
                     {
                         // Give us a generic RemoteWebDriver if we can't determine that it is an iOS or Android type driver (Appium)
                         RemoteWebDriver webDriver = new RemoteWebDriver(
-                                new URL(caps.getCapability("testServer").toString()), caps);
-                        innerArray[0] = webDriver;
+                                new URL(testServer), capabilities);
+                        return webDriver;
                     }
                     catch (Exception ex)
                     {
@@ -60,18 +66,7 @@ public class DriverFactory {
                 System.out.println(e.getMessage());
             }
 
-            driverArray[index] = innerArray[0];
-            index++;
-        }
-
-        Object[][] finalArray = new Object[driverArray.length][driverArray.length];
-        int arrayIndex = 0;
-        for(RemoteWebDriver obj : driverArray)
-        {
-            finalArray[arrayIndex] = new Object[]{obj};
-            arrayIndex++;
-        }
-
-        return finalArray;
+        System.out.println("No driver created! Are your capabilities in the correct format?");
+        return null;
     }
 }
