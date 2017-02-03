@@ -11,22 +11,21 @@ import java.util.List;
 /**
  * Created by matt-hfc on 10/31/16.
  */
-public class CapabilitiesFactory <T extends TestEnvironment> {
+public class CapabilitiesFactory <T extends TestEnvironment>
+{
 
-    public List<DesiredCapabilities> getCapabilities(List<T> testEnvironments) throws IllegalAccessException, NoSuchFieldException {
-        List<DesiredCapabilities> desiredCapabilitiesList = new ArrayList<>();
-        for(T testEnvironment : testEnvironments)
+    public DesiredCapabilities getCapabilities(T testEnvironment) throws IllegalAccessException, NoSuchFieldException
+    {
+        DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
+        for (Field field : testEnvironment.getClass().getDeclaredFields())
         {
-            DesiredCapabilities desiredCapabilities = new DesiredCapabilities();
-            for (Field field : testEnvironment.getClass().getDeclaredFields())
+            try
             {
-                try {
-                    desiredCapabilities.setCapability(field.getName(), testEnvironment.getClass().getField(field.getName()).get(testEnvironment));
-                } catch (Exception e) {}
+                desiredCapabilities.setCapability(field.getName(), testEnvironment.getClass().getField(field.getName()).get(testEnvironment));
             }
-            desiredCapabilitiesList.add(desiredCapabilities);
+            catch (Exception e) { System.out.println(e.getMessage()); }
         }
-        return desiredCapabilitiesList;
+        return desiredCapabilities;
     }
 
 }
