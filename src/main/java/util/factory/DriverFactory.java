@@ -21,7 +21,7 @@ import java.util.Map;
  */
 public class DriverFactory {
 
-    public static RemoteWebDriver getDrivers(DesiredCapabilities capabilities, String testServer, Class clazz) throws MalformedURLException {
+    public static RemoteWebDriver getDriver(DesiredCapabilities capabilities, String testServer, Class clazz) throws MalformedURLException {
 
         Map<String, ?> capsMap = capabilities.asMap();
             try
