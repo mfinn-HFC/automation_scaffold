@@ -16,6 +16,10 @@ public class BaseObject <T extends RemoteWebDriver> {
 
     protected T driver;
 
+    public BaseObject(T driver) {
+        this.driver = driver;
+    }
+
     // Swipe a mobile screen by a percentage of the screen size, UP or DOWN
     public void swipeByPercent(int percent, SwipeDirection direction)
     {
