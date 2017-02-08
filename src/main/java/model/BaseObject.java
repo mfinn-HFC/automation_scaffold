@@ -33,8 +33,8 @@ public class BaseObject<T extends AppiumDriver> {
         int swipeEndPoint;
 
         // For Appium, down means higher pixel location, up means lower pixel location (0 is screen bottom)
-        if(direction == SwipeDirection.DOWN) swipeEndPoint = yCenter + ( (dimension.getHeight() / 100) * percent );
-        else if(direction == SwipeDirection.UP) swipeEndPoint = yCenter - ( (dimension.getHeight() / 100) * percent );
+        if(direction == SwipeDirection.DOWN) swipeEndPoint = ( (dimension.getHeight() / 100) * percent );
+        else if(direction == SwipeDirection.UP) swipeEndPoint = ( (dimension.getHeight() / 100) * percent );
         else throw new IllegalArgumentException("No valid swipe direction specified. Options: SwipeDirection.UP, SwipeDirection.DOWN");
 
         if( (swipeEndPoint > (yCenter * 2) ) || swipeEndPoint < 0)
