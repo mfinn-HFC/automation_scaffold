@@ -36,13 +36,14 @@ public class BaseObject<T extends AppiumDriver> {
         else if(direction == SwipeDirection.UP) swipeEndPoint = yCenter - ( (dimension.getHeight() / 100) * percent );
         else throw new IllegalArgumentException("No valid swipe direction specified. Options: SwipeDirection.UP, SwipeDirection.DOWN");
 
-        if( (dimension.getHeight() - swipeEndPoint) > dimension.getHeight() / 2)
+        if( (swipeEndPoint > (yCenter * 2) ) || swipeEndPoint < 0)
         {
             throw new IllegalArgumentException("You are attempting to swipe an area larger than half the size " +
                     "of the screen! This cannot be done as swiping begins from the center (Y Axis). swipeEndPoint value: " + swipeEndPoint);
         }
         else
         {
+            System.out.println("Attempting to swipe to location: " + swipeEndPoint);
             TouchAction touchAction = new TouchAction(driver);
             touchAction.tap(xCenter, yCenter).moveTo(xCenter, swipeEndPoint).release().perform();
         }
