@@ -28,8 +28,8 @@ public class BaseObject<T extends AppiumDriver> {
     {
         Dimension dimension = driver.manage().window().getSize();
         System.out.println("Size of device: " + dimension.getWidth() + " by " + dimension.getHeight());
-        int xCenter = dimension.getWidth() / 2;
-        int yCenter = dimension.getHeight() / 2;
+        int xCenter = (dimension.getWidth() / 2);
+        int yCenter = (dimension.getHeight() / 2);
         int swipeEndPoint;
 
         // For Appium, down means higher pixel location, up means lower pixel location (0 is screen bottom)
