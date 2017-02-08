@@ -16,6 +16,10 @@ public class BaseObject <T extends RemoteWebDriver> {
 
     protected T driver;
 
+    public BaseObject() {
+
+    }
+
     public BaseObject(T driver) {
         this.driver = driver;
     }
