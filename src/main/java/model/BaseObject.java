@@ -19,7 +19,7 @@ public class BaseObject <T extends RemoteWebDriver> {
     // Swipe a mobile screen by a percentage of the screen size, UP or DOWN
     public void swipeByPercent(int percent, SwipeDirection direction)
     {
-        if( (driver.getClass() == RemoteWebDriver.class) || (driver.getClass() == WebDriver.class))
+        if( (driver.getClass() == RemoteWebDriver.class))
         {
             throw new IllegalArgumentException("You cannot use a swipe action with a RemoteWebDriver. You must use " +
                     "an Appium based driver, such as IOSDriver, AndroidDriver or AppiumDriver");
