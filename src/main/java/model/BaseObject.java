@@ -3,6 +3,8 @@ package model;
 import enums.SwipeDirection;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.TouchAction;
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.ios.IOSDriver;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -12,27 +14,18 @@ import org.openqa.selenium.remote.RemoteWebDriver;
  * A base object for all tests and screen / page objects to inherit from, which will contain generic methods for
  * RemoteWebDriver / Appium
  */
-public class BaseObject <T extends RemoteWebDriver> {
+public class BaseObject<T extends AppiumDriver> {
 
-    protected T driver;
-
-    public BaseObject() {
-
-    }
+    private T driver;
 
     public BaseObject(T driver) {
         this.driver = driver;
+
     }
 
     // Swipe a mobile screen by a percentage of the screen size, UP or DOWN
     public void swipeByPercent(int percent, SwipeDirection direction)
     {
-        if( (driver.getClass() == RemoteWebDriver.class))
-        {
-            throw new IllegalArgumentException("You cannot use a swipe action with a RemoteWebDriver. You must use " +
-                    "an Appium based driver, such as IOSDriver, AndroidDriver or AppiumDriver");
-        }
-
         Dimension dimension = driver.manage().window().getSize();
         int xCenter = dimension.getWidth() / 2;
         int yCenter = dimension.getHeight() / 2;
