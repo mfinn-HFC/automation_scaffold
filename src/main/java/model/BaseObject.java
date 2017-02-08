@@ -27,6 +27,7 @@ public class BaseObject<T extends AppiumDriver> {
     public void swipeByPercent(int percent, SwipeDirection direction)
     {
         Dimension dimension = driver.manage().window().getSize();
+        System.out.println("Size of device: " + dimension.getWidth() + " by " + dimension.getHeight());
         int xCenter = dimension.getWidth() / 2;
         int yCenter = dimension.getHeight() / 2;
         int swipeEndPoint;
