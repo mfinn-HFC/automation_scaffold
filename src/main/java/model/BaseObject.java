@@ -17,6 +17,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 public class BaseObject<T extends AppiumDriver> {
 
     private T driver;
+    private final int waitTime = 1000;
 
     public BaseObject(T driver) {
         this.driver = driver;
@@ -44,10 +45,14 @@ public class BaseObject<T extends AppiumDriver> {
         }
         else
         {
-            System.out.println("Attempting to swipe to location: " + swipeEndPoint +
-                    " - from location X: " + xCenter + " from location Y: " + yCenter);
-            TouchAction touchAction = new TouchAction(driver);
-                touchAction.press(xCenter, yCenter).moveTo(0, -swipeEndPoint).release().perform();
+            try {
+                System.out.println("Attempting to swipe to location: " + swipeEndPoint +
+                        " - from location X: " + xCenter + " from location Y: " + yCenter);
+                TouchAction touchAction = new TouchAction(driver);
+                touchAction.press(xCenter, yCenter).wait(waitTime);
+                touchAction.moveTo(0, -swipeEndPoint).release().perform();
+            }
+            catch (InterruptedException e) { }
         }
     }
 }
