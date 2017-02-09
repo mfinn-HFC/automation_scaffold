@@ -46,8 +46,9 @@ public class BaseObject<T extends AppiumDriver> {
         {
             System.out.println("Attempting to swipe to location: " + swipeEndPoint +
                     " - from location X: " + xCenter + " from location Y: " + yCenter);
-                TouchAction touchAction = new TouchAction(driver);
-                touchAction.tap(xCenter, yCenter).moveTo(0, -swipeEndPoint).release().perform();
+            driver.swipe(xCenter, yCenter, xCenter, swipeEndPoint, 1);
+                /*TouchAction touchAction = new TouchAction(driver);
+                touchAction.tap(xCenter, yCenter).moveTo(0, -swipeEndPoint).release().perform();*/
         }
     }
 }
