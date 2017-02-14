@@ -39,7 +39,7 @@ public final class TestObjectDeviceClient {
     public static JsonArray getAvailableFreeDevices(DeviceType deviceType)
     {
 
-        JsonArray devices = null;
+        JsonArray devices = new JsonArray();
 
         try
         {
@@ -78,20 +78,19 @@ public final class TestObjectDeviceClient {
 
     public static JsonArray convertEntityToJson(HttpEntity entity)
     {
+        JsonElement resultElement = new JsonObject();
         try
         {
             String results = EntityUtils.toString(entity);
             Gson gson = new Gson();
-            JsonElement resultElement = gson.toJsonTree(results);
-            return resultElement.getAsJsonArray();
+            resultElement = gson.toJsonTree(results);
         }
         catch (IOException e) {}
-        return null;
+        return resultElement.getAsJsonArray();
     }
 
     public static String waitForDeviceAvailability(DeviceType deviceType)
     {
-        String device = null;
         JsonArray devices = getAvailableFreeDevices(deviceType);
 
         // If the method was previously called and maxed out, start at 0
@@ -104,10 +103,9 @@ public final class TestObjectDeviceClient {
                     Thread.sleep(waitInterval);
                     devices = getAvailableFreeDevices(deviceType);
                 }
-                return devices.get(0).getAsString();
             }
         }
         catch (InterruptedException e) {}
-        return device;
+        return devices.get(0).getAsString();
     }
 }
