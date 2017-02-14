@@ -25,6 +25,4 @@ public class GmailClient {
         if (!inbox.isOpen()) inbox.open(Folder.READ_ONLY);
     }
 
-
-
 }
