@@ -34,6 +34,7 @@ import java.util.List;
  */
 public final class TestObjectDeviceClient {
 
+    private final static String userAgent = "Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2";
     private final static String baseURL = "https://app.testobject.com:443/api/rest/devices/v1/";
     private final static String availableDevicesURI = "/devices/available";
     private final static String iosIdentifierString = "iP";
@@ -51,10 +52,11 @@ public final class TestObjectDeviceClient {
 
         try
         {
-            CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
+            /*CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
             Credentials credentials = new UsernamePasswordCredentials(apiKey, "");
             credentialsProvider.setCredentials(AuthScope.ANY, credentials);
-            HttpClient httpClient = HttpClientBuilder.create().setDefaultCredentialsProvider(credentialsProvider).build();
+            HttpClient httpClient = HttpClientBuilder.create().setDefaultCredentialsProvider(credentialsProvider).build();*/
+            HttpClient httpClient = HttpClientBuilder.create().setUserAgent(userAgent).build();
 
             HttpGet httpGet = new HttpGet(baseURL + availableDevicesURI);
             httpGet.setHeader("Content-type", "application/json");
