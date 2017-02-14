@@ -49,8 +49,8 @@ public final class TestObjectDeviceClient {
             HttpClient httpClient = HttpClientBuilder.create().build();
             HttpGet httpGet = new HttpGet(baseURL + availableDevicesURI);
             httpGet.setHeader("Content-type", "application/json");
-            String encoding = Base64.getEncoder().encodeToString((apiKey + ":").getBytes());
-            httpGet.setHeader("Authorization", "Basic " + encoding);
+            //String encoding = Base64.getEncoder().encodeToString((apiKey + ":").getBytes());
+            httpGet.setHeader("Authorization", "Bearer " + apiKey);
 
             HttpResponse response = httpClient.execute(httpGet);
             if(response.getStatusLine().getStatusCode() == 200)
