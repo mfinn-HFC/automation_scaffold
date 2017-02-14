@@ -66,12 +66,12 @@ public final class TestObjectDeviceClient {
                 {
                     if(!devices.get(i).getAsString().contains("free")) devices.remove(i);
 
-                    if(deviceType == DeviceType.ANDROID)
+                    else if(deviceType == DeviceType.ANDROID)
                     {
                         if (devices.get(i).getAsString().contains(iosIdentifierString))
                             devices.remove(i);
                     }
-                    if(deviceType == DeviceType.IOS)
+                    else if(deviceType == DeviceType.IOS)
                     {
                         if(!devices.get(i).getAsString().contains(iosIdentifierString))
                             devices.remove(i);
