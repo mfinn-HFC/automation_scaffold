@@ -9,8 +9,13 @@ import enums.DeviceType;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.auth.AuthScope;
+import org.apache.http.auth.Credentials;
+import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
@@ -46,11 +51,13 @@ public final class TestObjectDeviceClient {
 
         try
         {
-            HttpClient httpClient = HttpClientBuilder.create().build();
+            CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
+            Credentials credentials = new UsernamePasswordCredentials(apiKey, "");
+            credentialsProvider.setCredentials(AuthScope.ANY, credentials);
+            HttpClient httpClient = HttpClientBuilder.create().setDefaultCredentialsProvider(credentialsProvider).build();
+
             HttpGet httpGet = new HttpGet(baseURL + availableDevicesURI);
             httpGet.setHeader("Content-type", "application/json");
-            //String encoding = Base64.getEncoder().encodeToString((apiKey + ":").getBytes());
-            httpGet.setHeader("Authorization", "Bearer " + apiKey);
 
             HttpResponse response = httpClient.execute(httpGet);
             if(response.getStatusLine().getStatusCode() == 200)
