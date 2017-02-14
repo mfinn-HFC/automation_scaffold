@@ -93,13 +93,11 @@ public final class TestObjectDeviceClient {
         try
         {
             String results = EntityUtils.toString(entity);
-            Gson gson = new Gson();
-            resultElement = gson.toJsonTree(results).getAsJsonArray();
-
             JsonParser parser = new JsonParser();
+
             JsonElement jsonElement = parser.parse(results);
-            JsonArray jsonArray = jsonElement.getAsJsonArray();
-            System.out.println(jsonArray);
+            resultElement = jsonElement.getAsJsonArray();
+            System.out.println(resultElement);
         }
         catch (IOException e) {}
         return resultElement;
