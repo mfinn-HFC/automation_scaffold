@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import model.TestEnvironment;
+import model.TestObjectEnvironment;
 import model.TestdroidEnvironment;
 import model.WebEnvironment;
 
@@ -23,11 +24,18 @@ public class EnvironmentFactory <T extends TestEnvironment> {
         List<T> testEnvironmentList = new ArrayList<>();
         for( JsonElement element : testEnvironments.get("capabilities").getAsJsonArray() )
         {
-            if(testEnvironmentType == TestdroidEnvironment.class) {
+            if(testEnvironmentType == TestdroidEnvironment.class)
+            {
                 TestdroidEnvironment testEnvironment = gson.fromJson(element, TestdroidEnvironment.class);
                 testEnvironmentList.add((T) testEnvironment);
             }
-            else if(testEnvironmentType == WebEnvironment.class) {
+            else if(testEnvironmentType == TestObjectEnvironment.class)
+            {
+                TestObjectEnvironment testEnvironment = gson.fromJson(element, TestObjectEnvironment.class);
+                testEnvironmentList.add((T) testEnvironment);
+            }
+            else if(testEnvironmentType == WebEnvironment.class)
+            {
                 WebEnvironment testEnvironment = gson.fromJson(element, WebEnvironment.class);
                 testEnvironmentList.add((T) testEnvironment);
             }
