@@ -1,9 +1,6 @@
 package util;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import com.sun.mail.util.BASE64EncoderStream;
 import enums.DeviceType;
 import org.apache.commons.lang3.ObjectUtils;
@@ -92,15 +89,20 @@ public final class TestObjectDeviceClient {
 
     public static JsonArray convertEntityToJson(HttpEntity entity)
     {
-        JsonElement resultElement = new JsonObject();
+        JsonArray resultElement = new JsonArray();
         try
         {
             String results = EntityUtils.toString(entity);
             Gson gson = new Gson();
-            resultElement = gson.toJsonTree(results);
+            resultElement = gson.toJsonTree(results).getAsJsonArray();
+
+            JsonParser parser = new JsonParser();
+            JsonElement jsonElement = parser.parse(results);
+            JsonArray jsonArray = jsonElement.getAsJsonArray();
+            System.out.println(jsonArray);
         }
         catch (IOException e) {}
-        return resultElement.getAsJsonArray();
+        return resultElement;
     }
 
     public static String waitForDeviceAvailability(DeviceType deviceType, String apiKey)
