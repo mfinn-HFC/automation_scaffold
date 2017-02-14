@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.sun.mail.util.BASE64EncoderStream;
 import enums.DeviceType;
 import org.apache.commons.lang3.ObjectUtils;
 import org.apache.http.HttpEntity;
@@ -14,11 +15,13 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.jboss.netty.handler.codec.base64.Base64Encoder;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.Base64;
 import java.util.List;
 
 /**
@@ -36,7 +39,7 @@ public final class TestObjectDeviceClient {
 
     private TestObjectDeviceClient() {}
 
-    public static JsonArray getAvailableFreeDevices(DeviceType deviceType)
+    public static JsonArray getAvailableFreeDevices(DeviceType deviceType, String apiKey)
     {
 
         JsonArray devices = new JsonArray();
@@ -46,6 +49,8 @@ public final class TestObjectDeviceClient {
             HttpClient httpClient = HttpClientBuilder.create().build();
             HttpGet httpGet = new HttpGet(baseURL + availableDevicesURI);
             httpGet.setHeader("Content-type", "application/json");
+            String encoding = Base64.getEncoder().encodeToString((apiKey + ":").getBytes());
+            httpGet.setHeader("Authorization", "Basic " + encoding);
 
             HttpResponse response = httpClient.execute(httpGet);
             if(response.getStatusLine().getStatusCode() == 200)
@@ -89,9 +94,9 @@ public final class TestObjectDeviceClient {
         return resultElement.getAsJsonArray();
     }
 
-    public static String waitForDeviceAvailability(DeviceType deviceType)
+    public static String waitForDeviceAvailability(DeviceType deviceType, String apiKey)
     {
-        JsonArray devices = getAvailableFreeDevices(deviceType);
+        JsonArray devices = getAvailableFreeDevices(deviceType, apiKey);
 
         // If the method was previously called and maxed out, start at 0
         if(loopCount == maxLoops) loopCount = 0;
@@ -101,7 +106,7 @@ public final class TestObjectDeviceClient {
                 if (devices.size() == 0 || devices == null) {
                     loopCount++;
                     Thread.sleep(waitInterval);
-                    devices = getAvailableFreeDevices(deviceType);
+                    devices = getAvailableFreeDevices(deviceType, apiKey);
                 }
             }
         }
