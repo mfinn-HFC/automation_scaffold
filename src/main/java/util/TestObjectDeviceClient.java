@@ -49,10 +49,6 @@ public final class TestObjectDeviceClient {
 
         try
         {
-            /*CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
-            Credentials credentials = new UsernamePasswordCredentials(apiKey, "");
-            credentialsProvider.setCredentials(AuthScope.ANY, credentials);
-            HttpClient httpClient = HttpClientBuilder.create().setDefaultCredentialsProvider(credentialsProvider).build();*/
             HttpClient httpClient = HttpClientBuilder.create().setUserAgent(userAgent).build();
 
             HttpGet httpGet = new HttpGet(baseURL + availableDevicesURI);
@@ -62,19 +58,20 @@ public final class TestObjectDeviceClient {
             if(response.getStatusLine().getStatusCode() == 200)
             {
                 devices = convertEntityToJson(response.getEntity());
-                for(int i = 0; i < devices.size(); i++)
+
+                for(JsonElement deviceName : devices)
                 {
-                    if(!devices.get(i).getAsString().contains("free")) devices.remove(i);
+                    if(!deviceName.getAsString().contains("free")) devices.remove(deviceName);
 
                     else if(deviceType == DeviceType.ANDROID)
                     {
-                        if (devices.get(i).getAsString().contains(iosIdentifierString))
-                            devices.remove(i);
+                        if (deviceName.getAsString().contains(iosIdentifierString))
+                            devices.remove(deviceName);
                     }
                     else if(deviceType == DeviceType.IOS)
                     {
-                        if(!devices.get(i).getAsString().contains(iosIdentifierString))
-                            devices.remove(i);
+                        if(!deviceName.getAsString().contains(iosIdentifierString))
+                            devices.remove(deviceName);
                     }
                 }
                 return devices;
@@ -89,18 +86,17 @@ public final class TestObjectDeviceClient {
 
     public static JsonArray convertEntityToJson(HttpEntity entity)
     {
-        JsonArray resultElement = new JsonArray();
+        JsonArray devicesArray = new JsonArray();
         try
         {
             String results = EntityUtils.toString(entity);
             JsonParser parser = new JsonParser();
 
-            JsonElement jsonElement = parser.parse(results);
-            resultElement = jsonElement.getAsJsonArray();
-            System.out.println(resultElement);
+            JsonElement deviceNamesElement = parser.parse(results);
+            devicesArray = deviceNamesElement.getAsJsonArray();
         }
         catch (IOException e) {}
-        return resultElement;
+        return devicesArray;
     }
 
     public static String waitForDeviceAvailability(DeviceType deviceType, String apiKey)
