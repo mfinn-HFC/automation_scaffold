@@ -127,8 +127,11 @@ public final class TestObjectDeviceClient {
                 }
                 else break;
             }
-            if(queue.isEmpty()) queue.add(devices.get(0).toString());
-            return queue.take();
+            if(devices.size() >= 1)
+            {
+                if(queue.isEmpty()) queue.add(devices.get(0).toString());
+                return queue.take();
+            }
         }
         catch (InterruptedException e) {}
         System.out.println("*** EPIC FAILURE: Nothing in device blocking queue! No device for testing - return null!***");
