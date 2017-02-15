@@ -62,7 +62,7 @@ public final class TestObjectDeviceClient {
                 for(int i = 0; i < devices.size(); i++)
                 {
 
-                    if(!devices.get(i).getAsString().contains("free"))
+                    if(devices.get(i).getAsString().contains("free"))
                     {
 
                         if (deviceType == DeviceType.ANDROID)
