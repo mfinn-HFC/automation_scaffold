@@ -129,7 +129,7 @@ public final class TestObjectDeviceClient {
             }
             if(devices.size() >= 1)
             {
-                if(queue.isEmpty()) queue.add(devices.get(0).toString());
+                if(queue.isEmpty()) queue.add(devices.get(0).getAsString());
                 return queue.take();
             }
         }
