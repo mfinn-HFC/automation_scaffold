@@ -59,30 +59,36 @@ public final class TestObjectDeviceClient {
             if(response.getStatusLine().getStatusCode() == 200)
             {
                 devices = convertEntityToJson(response.getEntity());
-                for(int i = 0; i < devices.size(); i++)
-                {
-
-                    if(devices.get(i).getAsString().contains("free"))
-                    {
-
-                        if (deviceType == DeviceType.ANDROID)
-                        {
-                            if (!devices.get(i).getAsString().contains(iosIdentifierString))
-                                finalDevices.add(devices.get(i));
-                        }
-                        else if (deviceType == DeviceType.IOS)
-                        {
-                            if (devices.get(i).getAsString().contains(iosIdentifierString))
-                                finalDevices.add(devices.get(i));
-                        }
-                    }
-                }
+                finalDevices = filterFreeDevicesByDeviceType(deviceType, devices);
                 return finalDevices;
             }
         }
         catch (Exception ex)
         {
             System.out.println(ex.getMessage());
+        }
+        return finalDevices;
+    }
+
+    public static JsonArray filterFreeDevicesByDeviceType(DeviceType deviceType, JsonArray devices)
+    {
+        JsonArray finalDevices = new JsonArray();
+
+        for(int i = 0; i < devices.size(); i++)
+        {
+            if (devices.get(i).getAsString().contains("free"))
+            {
+                if (deviceType == DeviceType.ANDROID)
+                {
+                    if (!devices.get(i).getAsString().contains(iosIdentifierString))
+                        finalDevices.add(devices.get(i));
+                }
+                else if (deviceType == DeviceType.IOS)
+                {
+                    if (devices.get(i).getAsString().contains(iosIdentifierString))
+                        finalDevices.add(devices.get(i));
+                }
+            }
         }
         return finalDevices;
     }
@@ -116,6 +122,7 @@ public final class TestObjectDeviceClient {
                     Thread.sleep(waitInterval);
                     devices = getAvailableFreeDevices(deviceType);
                 }
+                else break;
             }
         }
         catch (InterruptedException e) {}
