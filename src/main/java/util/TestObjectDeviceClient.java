@@ -25,6 +25,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Base64;
 import java.util.List;
+import java.util.concurrent.ArrayBlockingQueue;
 
 /**
  * This class will tell you what devices are free to launch test instances
@@ -39,6 +40,8 @@ public final class TestObjectDeviceClient {
     private final static int maxLoops = 50;
     private final static int waitInterval = 6000;
     private static int loopCount = 0;
+
+    private static final ArrayBlockingQueue<String> queue = new ArrayBlockingQueue(1);
 
     private TestObjectDeviceClient() {}
 
@@ -124,8 +127,11 @@ public final class TestObjectDeviceClient {
                 }
                 else break;
             }
+            if(queue.isEmpty()) queue.add(devices.get(0).toString());
+            return queue.take();
         }
         catch (InterruptedException e) {}
-        return devices.get(0).getAsString();
+        System.out.println("*** EPIC FAILURE: Nothing in device blocking queue! No device for testing - return null!***");
+        return null;
     }
 }
