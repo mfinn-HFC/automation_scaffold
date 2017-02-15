@@ -42,10 +42,11 @@ public final class TestObjectDeviceClient {
 
     private TestObjectDeviceClient() {}
 
-    public static JsonArray getAvailableFreeDevices(DeviceType deviceType, String apiKey)
+    public static JsonArray getAvailableFreeDevices(DeviceType deviceType)
     {
 
-        JsonArray devices = new JsonArray();
+        JsonArray devices;
+        JsonArray finalDevices = new JsonArray();
 
         try
         {
@@ -58,32 +59,32 @@ public final class TestObjectDeviceClient {
             if(response.getStatusLine().getStatusCode() == 200)
             {
                 devices = convertEntityToJson(response.getEntity());
-
-                for(JsonElement deviceName : devices)
+                for(int i = 0; i < devices.size(); i++)
                 {
-                    System.out.println(deviceName.getAsString());
-                    System.out.println(deviceName.toString());
-                    if(!deviceName.getAsString().contains("free")) devices.remove(deviceName);
 
-                    else if(deviceType == DeviceType.ANDROID)
+                    if(!devices.get(i).getAsString().contains("free"))
                     {
-                        if (deviceName.getAsString().contains(iosIdentifierString))
-                            devices.remove(deviceName);
-                    }
-                    else if(deviceType == DeviceType.IOS)
-                    {
-                        if(!deviceName.getAsString().contains(iosIdentifierString))
-                            devices.remove(deviceName);
+
+                        if (deviceType == DeviceType.ANDROID)
+                        {
+                            if (!devices.get(i).getAsString().contains(iosIdentifierString))
+                                finalDevices.add(devices.get(i));
+                        }
+                        else if (deviceType == DeviceType.IOS)
+                        {
+                            if (devices.get(i).getAsString().contains(iosIdentifierString))
+                                finalDevices.add(devices.get(i));
+                        }
                     }
                 }
-                return devices;
+                return finalDevices;
             }
         }
         catch (Exception ex)
         {
             System.out.println(ex.getMessage());
         }
-        return devices;
+        return finalDevices;
     }
 
     public static JsonArray convertEntityToJson(HttpEntity entity)
@@ -101,9 +102,9 @@ public final class TestObjectDeviceClient {
         return devicesArray;
     }
 
-    public static String waitForDeviceAvailability(DeviceType deviceType, String apiKey)
+    public static String waitForDeviceAvailability(DeviceType deviceType)
     {
-        JsonArray devices = getAvailableFreeDevices(deviceType, apiKey);
+        JsonArray devices = getAvailableFreeDevices(deviceType);
 
         // If the method was previously called and maxed out, start at 0
         if(loopCount == maxLoops) loopCount = 0;
@@ -113,7 +114,7 @@ public final class TestObjectDeviceClient {
                 if (devices.size() == 0 || devices == null) {
                     loopCount++;
                     Thread.sleep(waitInterval);
-                    devices = getAvailableFreeDevices(deviceType, apiKey);
+                    devices = getAvailableFreeDevices(deviceType);
                 }
             }
         }
