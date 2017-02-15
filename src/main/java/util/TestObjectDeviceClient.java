@@ -61,6 +61,8 @@ public final class TestObjectDeviceClient {
 
                 for(JsonElement deviceName : devices)
                 {
+                    System.out.println(deviceName.getAsString());
+                    System.out.println(deviceName.toString());
                     if(!deviceName.getAsString().contains("free")) devices.remove(deviceName);
 
                     else if(deviceType == DeviceType.ANDROID)
