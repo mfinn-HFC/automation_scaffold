@@ -36,8 +36,8 @@ public final class TestObjectDeviceClient {
     private final static String baseURL = "https://app.testobject.com:443/api/rest/devices/v1/";
     private final static String availableDevicesURI = "devices/available";
     private final static String iosIdentifierString = "iP";
-    // Max 5 minute wait with these values
-    private final static int maxLoops = 50;
+    // Max 10 minute wait with these values
+    private final static int maxLoops = 100;
     private final static int waitInterval = 6000;
     private int loopCount = 0;
     public static String currentDevice;
@@ -112,6 +112,11 @@ public final class TestObjectDeviceClient {
         return devicesArray;
     }
 
+    public void releaseCurrentDevice()
+    {
+        currentDevice = null;
+    }
+
     public String waitForDeviceAvailability(DeviceType deviceType)
     {
         JsonArray devices = getAvailableFreeDevices(deviceType);
@@ -120,7 +125,8 @@ public final class TestObjectDeviceClient {
         if(loopCount == maxLoops) loopCount = 0;
         try
         {
-            while(loopCount < maxLoops) {
+            while(loopCount < maxLoops)
+            {
                 if (devices.size() == 0 || devices == null) {
                     loopCount++;
                     Thread.sleep(waitInterval);
@@ -128,18 +134,16 @@ public final class TestObjectDeviceClient {
                 }
                 else break;
             }
-            if(devices.size() >= 1)
+
+            if(devices.size() >= 1 && queue.isEmpty() && currentDevice == null)
             {
-                if(queue.isEmpty() && currentDevice == null)
-                {
-                    currentDevice = devices.get(0).getAsString();
-                    queue.add(currentDevice);
-                }
-                return queue.take();
+                currentDevice = devices.get(0).getAsString();
+                queue.add(currentDevice);
             }
+            return queue.take();
         }
         catch (InterruptedException e) {}
-        System.out.println("*** EPIC FAILURE: Nothing in device blocking queue! No device for testing - return null!***");
+        System.out.println("***EPIC FAILURE: Nothing in device blocking queue! No device for testing - return null!***");
         return null;
     }
 }
