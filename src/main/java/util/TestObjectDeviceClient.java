@@ -39,14 +39,14 @@ public final class TestObjectDeviceClient {
     // Max 10 minute wait with these values
     private final static int maxLoops = 100;
     private final static int waitInterval = 6000;
-    private int loopCount = 0;
+    private static int loopCount = 0;
     public static String currentDevice;
 
     private static final ArrayBlockingQueue<String> queue = new ArrayBlockingQueue(1);
 
     public TestObjectDeviceClient() {}
 
-    public JsonArray getAvailableFreeDevices(DeviceType deviceType)
+    public static JsonArray getAvailableFreeDevices(DeviceType deviceType)
     {
 
         JsonArray devices;
@@ -74,7 +74,7 @@ public final class TestObjectDeviceClient {
         return finalDevices;
     }
 
-    public JsonArray filterFreeDevicesByDeviceType(DeviceType deviceType, JsonArray devices)
+    public static JsonArray filterFreeDevicesByDeviceType(DeviceType deviceType, JsonArray devices)
     {
         JsonArray finalDevices = new JsonArray();
 
@@ -97,7 +97,7 @@ public final class TestObjectDeviceClient {
         return finalDevices;
     }
 
-    public JsonArray convertEntityToJson(HttpEntity entity)
+    public static JsonArray convertEntityToJson(HttpEntity entity)
     {
         JsonArray devicesArray = new JsonArray();
         try
@@ -117,7 +117,7 @@ public final class TestObjectDeviceClient {
         currentDevice = null;
     }
 
-    public String waitForDeviceAvailability(DeviceType deviceType)
+    public static String waitForDeviceAvailability(DeviceType deviceType)
     {
         JsonArray devices = getAvailableFreeDevices(deviceType);
 
