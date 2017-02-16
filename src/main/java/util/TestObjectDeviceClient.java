@@ -39,13 +39,14 @@ public final class TestObjectDeviceClient {
     // Max 5 minute wait with these values
     private final static int maxLoops = 50;
     private final static int waitInterval = 6000;
-    private static int loopCount = 0;
+    private int loopCount = 0;
+    public static String currentDevice;
 
     private static final ArrayBlockingQueue<String> queue = new ArrayBlockingQueue(1);
 
-    private TestObjectDeviceClient() {}
+    public TestObjectDeviceClient() {}
 
-    public static JsonArray getAvailableFreeDevices(DeviceType deviceType)
+    public JsonArray getAvailableFreeDevices(DeviceType deviceType)
     {
 
         JsonArray devices;
@@ -73,7 +74,7 @@ public final class TestObjectDeviceClient {
         return finalDevices;
     }
 
-    public static JsonArray filterFreeDevicesByDeviceType(DeviceType deviceType, JsonArray devices)
+    public JsonArray filterFreeDevicesByDeviceType(DeviceType deviceType, JsonArray devices)
     {
         JsonArray finalDevices = new JsonArray();
 
@@ -96,7 +97,7 @@ public final class TestObjectDeviceClient {
         return finalDevices;
     }
 
-    public static JsonArray convertEntityToJson(HttpEntity entity)
+    public JsonArray convertEntityToJson(HttpEntity entity)
     {
         JsonArray devicesArray = new JsonArray();
         try
@@ -111,7 +112,7 @@ public final class TestObjectDeviceClient {
         return devicesArray;
     }
 
-    public static String waitForDeviceAvailability(DeviceType deviceType)
+    public String waitForDeviceAvailability(DeviceType deviceType)
     {
         JsonArray devices = getAvailableFreeDevices(deviceType);
 
@@ -129,7 +130,11 @@ public final class TestObjectDeviceClient {
             }
             if(devices.size() >= 1)
             {
-                if(queue.isEmpty()) queue.add(devices.get(0).getAsString());
+                if(queue.isEmpty() && currentDevice == null)
+                {
+                    currentDevice = devices.get(0).getAsString();
+                    queue.add(currentDevice);
+                }
                 return queue.take();
             }
         }
