@@ -30,7 +30,9 @@ public class WaitBy {
     }
 
     /**
-     * Would this be better served by some kind of Lambda? Couldn't figure out a working lambda for this stuff
+     * Would this be better served by some kind of Lambda? Couldn't figure out a working lambda for this stuff. This
+     * may need to be reduced to a single function that accepts the desired driver function and executes it when the
+     * condition is met
      */
     /*public void waitByWebDriverMethod(final By locator, Function webdriverMethod) {
         final long startTime = System.currentTimeMillis();

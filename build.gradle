@@ -17,6 +17,7 @@ dependencies {
     compile 'com.fasterxml.jackson:jackson-parent:2.8'
     compile 'org.apache.httpcomponents:httpclient:+'
     compile 'org.testng:testng:6.9.13.6'
+    compile 'org.reflections:reflections:0.9.10'
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
