@@ -45,7 +45,7 @@ public class TestInstanceFactory {
     public static Object[] createInstances(DesiredCapabilities capabilities) throws Exception
     {
         Reflections reflections = new Reflections(testDirectory);
-        Set<Class<? extends baseClazz>> packageClasses  = reflections.getSubTypesOf(baseClazz);
+        Set<Class<?>> packageClasses  = reflections.getSubTypesOf(baseClazz);
         Object[] instantiatedTests = new Object[packageClasses.size()];
 
         int index = 0;
