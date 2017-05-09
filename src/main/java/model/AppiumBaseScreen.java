@@ -11,15 +11,15 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 
 /**
  * Created by matt-hfc on 2/7/17.
- * A base object for all tests and screen / page objects to inherit from, which will contain generic methods for
+ * A base object for all screens / page objects to inherit from, which will contain generic methods for
  * Appium
  */
-public class AppiumBaseTest<T extends AppiumDriver> {
+public class AppiumBaseScreen<T extends AppiumDriver> {
 
     private T driver;
     private final int waitTime = 1000;
 
-    public AppiumBaseTest(T driver) {
+    public AppiumBaseScreen(T driver) {
         this.driver = driver;
 
     }

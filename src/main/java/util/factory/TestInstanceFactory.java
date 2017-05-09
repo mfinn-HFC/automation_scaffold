@@ -7,6 +7,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.reflections.Reflections;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Factory;
+import org.testng.annotations.Parameters;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -29,6 +30,7 @@ public class TestInstanceFactory {
 
     private static EnvironmentFactory environmentFactory = new EnvironmentFactory();
 
+    @Parameters({"jsonLocation", "baseClazz"})
     public TestInstanceFactory(String jsonLocation, Class baseClazz) {
         this.jsonLocation = jsonLocation;
         this.baseClazz = baseClazz;
@@ -70,7 +72,7 @@ public class TestInstanceFactory {
     public static Object[][] setEnvironments() throws FileNotFoundException, IllegalAccessException, NoSuchFieldException, MalformedURLException
     {
         JsonParser parser = new JsonParser();
-        JsonElement jsonElement = parser.parse(new FileReader(jsonLocation));
+        JsonElement jsonElement = parser.parse(new FileReader("/Users/matt-hfc/IdeaProjects/vdb-android-automation/src/test/resources/androidEnvironments.json"));
 
         // Set basic values for instantiating tests in the @Factory
         testServer = jsonElement.getAsJsonObject().get("testServer").getAsString();
