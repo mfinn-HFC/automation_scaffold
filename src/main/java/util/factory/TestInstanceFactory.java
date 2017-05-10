@@ -30,7 +30,6 @@ public class TestInstanceFactory {
 
     private static EnvironmentFactory environmentFactory = new EnvironmentFactory();
 
-    @Parameters({"jsonLocation", "baseClazz"})
     public TestInstanceFactory(String jsonLocation, Class baseClazz) {
         this.jsonLocation = jsonLocation;
         this.baseClazz = baseClazz;
