@@ -46,7 +46,7 @@ public class TestInstanceFactory {
     public static Object[] createInstances(DesiredCapabilities capabilities) throws Exception
     {
         Reflections reflections = new Reflections(testDirectory);
-        Set<Class<?>> packageClasses  = reflections.getSubTypesOf(Object.class);
+        Set<Class<?>> packageClasses  = reflections.getSubTypesOf(baseClazz);
         Object[] instantiatedTests = new Object[packageClasses.size()];
 
         int index = 0;
@@ -61,7 +61,7 @@ public class TestInstanceFactory {
             catch(Exception e)
             {
                 System.out.println("***Constructor / Init Exception for: " + clazz.getSimpleName() + "***");
-                System.out.println(e.getMessage());
+                System.out.println( e.getMessage() );
             }
         }
         return instantiatedTests;
@@ -111,7 +111,7 @@ public class TestInstanceFactory {
         {
             System.out.println( e.getMessage() );
         }
-        System.out.println("**ERROR: Did not create a driver, returning null, test will be ignored!");
+        System.out.println("**ERROR: Did not create a driver, returning null, test run will be ignored!");
         return null;
     }
 }
