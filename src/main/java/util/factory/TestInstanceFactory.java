@@ -8,6 +8,7 @@ import org.reflections.Reflections;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Factory;
 import org.testng.annotations.Parameters;
+import org.testng.annotations.Test;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -46,7 +47,7 @@ public class TestInstanceFactory {
     public static Object[] createInstances(DesiredCapabilities capabilities) throws Exception
     {
         Reflections reflections = new Reflections(testDirectory);
-        Set<Class<?>> packageClasses  = reflections.getSubTypesOf(baseClazz);
+        Set<Class<?>> packageClasses  = reflections.getTypesAnnotatedWith(Test.class);
         Object[] instantiatedTests = new Object[packageClasses.size()];
 
         int index = 0;
